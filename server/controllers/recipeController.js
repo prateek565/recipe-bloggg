@@ -139,16 +139,13 @@ exports.submitRecipeOnPost = async(req, res) => {
     } else {
       console.log(' Files where uploaded.');
       imageUploadFile = req.files.image;
-      // newImageName = Date.now() + imageUploadFile.name;
-      newImageName={  
-        data: imageUploadFile.data,
-        contentType: imageUploadFile.mimetype,}
+      newImageName = Date.now() + imageUploadFile.name;
 
-      // uploadPath = require('path').resolve('./') + '/public/uploads/' + newImageName;
+      uploadPath = require('path').resolve('./') + '/public/uploads/' + newImageName;
 
-      // imageUploadFile.mv(uploadPath, function(err){
-      //   if(err) return res.status(500).send(err);
-      // })
+      imageUploadFile.mv(uploadPath, function(err){
+        if(err) return res.status(500).send(err);
+      })
 
     }
 
