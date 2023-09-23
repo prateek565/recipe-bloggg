@@ -26,6 +26,10 @@ const recipeSchema = new mongoose.Schema({
     data: Buffer,
     contentType: String
   },
+  rating:{
+    type: Number,
+    
+  },
 });
 
 

@@ -10,14 +10,15 @@
 
   <div class="row">
 
-    <div class="col-12 col-md-4">
-      <img src="/uploads/<%- recipe.image %>" class="img-fluid sticky-top" style="top: 20px;" alt="<%- recipe.name %>" loading="lazy">
+    <div class="col-12 col-md-4" style="display: flex;    justify-content: center;">
+      <img src="data:<%= recipe.image.contentType %>;base64,<%= recipe.image.data.toString('base64') %>" class="img-fluid sticky-top" style="top: 20px; height: 27vw;" alt="<%- recipe.name %>" loading="lazy">
     </div>
 
     <div class="col-12 col-md-8">
       <div class="row">
         <div class="col-12"><h1><%- recipe.name %></h1></div>
         <div class="col-12 mb-4"><i class="bi bi-tag"></i> <%- recipe.category %></div>
+        <p class="lead">Rating: <%= recipe.rating %></p>
         <div class="col-12" style="white-space: pre-line;">
           <h4>Cooking Instructions</h4>
           <%- recipe.description %>
@@ -36,6 +37,42 @@
       </div>
     </div>
   </div>
+
+  <div class="container">
+
+    <h2 class="mt-4">Reviews</h2>
+    <% reviews.forEach((review) => { %>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Rating: <%= review.rating %></h5>
+                <p class="card-text"><%= review.comment %></p>
+            </div>
+        </div>
+    <% }); %>
+
+    <!-- Add a review form (assuming user is authenticated) -->
+    <% if (cookiedata.token != 'logout') { %>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Leave a Review</h5>
+                <form action="/recipe/<%= recipe._id %>/reviews" method="post">
+                    <div class="mb-3">
+                        <label for="rating" class="form-label">Rating:</label>
+                        <input type="number" class="form-control" name="rating" min="1" max="5" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">Comment:</label>
+                        <textarea class="form-control" name="comment" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                </form>
+            </div>
+        </div>
+    <% } else { %>
+        <!-- Display a message for non-authenticated users -->
+        <p class="mt-4">Login to leave a review.</p>
+    <% } %>
+</div>
 <% } else { %>
   <p>No item found.</p>
 <% } %>
