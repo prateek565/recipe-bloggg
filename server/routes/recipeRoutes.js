@@ -16,12 +16,18 @@ router.get('/explore-random', recipeController.exploreRandom);
 router.get('/submit-recipe', recipeController.submitRecipe);
 router.post('/submit-recipe', recipeController.submitRecipeOnPost);
 
+/**
+ * Auth Routes 
+*/
 router.get('/login', recipeController.loginpage);
 router.get('/register', recipeController.registerpage);
 router.get('/logout', recipeController.logout);
 router.post('/login', recipeController.login);
 router.post('/register', recipeController.register);
 
+/**
+ * Reviews Routes 
+*/
 router.post('/recipe/:recipeId/reviews', reviewController.newreview);
 
 

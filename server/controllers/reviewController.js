@@ -1,7 +1,10 @@
 
 const Recipe = require('../models/Recipe');
 const Review = require('../models/Reviews');
-
+/**
+ * POST /:recipeId/reviews
+ * newreviewcreate
+*/
 exports.newreview = async (req, res) => {
   const { recipeId } = req.params;
   const { rating, comment } = req.body;

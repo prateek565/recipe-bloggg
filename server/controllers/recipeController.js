@@ -178,18 +178,12 @@ exports.submitRecipeOnPost = async(req, res) => {
     } else {
       console.log(' Files where uploaded.');
       imageUploadFile = req.files.image;
-       // newImageName = Date.now() + imageUploadFile.name;
        newImageName={  
         data: imageUploadFile.data,
         contentType: imageUploadFile.mimetype,}
         console.log(newImageName);
 
-    //   // uploadPath = require('path').resolve('./') + '/public/uploads/' + newImageName;
-
-    //   // imageUploadFile.mv(uploadPath, function(err){
-    //   //   if(err) return res.status(500).send(err);
-      // })
-
+    
     }
   // const token = req.cookie.token ;
   // console.log(req.cookie);
@@ -207,17 +201,14 @@ exports.submitRecipeOnPost = async(req, res) => {
       });
 
       await newRecipe.save();
-       // req.flash('infoSubmit', 'Recipe has been added.')
     res.redirect('/submit-recipe');
   } catch (error) {
-    // res.json(error);
-    // req.flash('infoErrors', error);
     res.redirect('/submit-recipe')}
 }
 
 
 /**
- * GET /login_page
+ * GET /login
  * login_page
 */
 exports.loginpage = async(req, res) => {
@@ -225,16 +216,17 @@ exports.loginpage = async(req, res) => {
   res.render('login',{cookiedata} );
 }
 /**
- * GET /registerpage
+ * GET /register
  * registerpage
 */
 exports.registerpage = async(req, res) => {
   const cookiedata= req.cookies;
   res.render('register' ,{cookiedata});
 }
-
-
-
+/**
+ * GET /logout
+ * logoutPage
+*/
 exports.logout = async(req, res) => {
   if (typeof window !== 'undefined') {
   localStorage.clear();}
@@ -242,7 +234,10 @@ exports.logout = async(req, res) => {
 res.status(200);
   res.redirect('/');
 }
-
+/**
+ * post /Login
+ * LoginFeature
+*/
 exports.login = async(req, res) => {
   // console.log(req.body);
    await User.findOne({
@@ -271,20 +266,17 @@ exports.login = async(req, res) => {
         // Put token in cookie
         res.cookie('token', token, {expire: new Date() + 9999});
       res.redirect('/submit-recipe');
-          
-      // res.status(200).send({
-      //       username: user.username,
-      //       email: user.email,
-      //       accessToken: token,
-      //       message: "Login Successful!"
-      //     });
+     
 
       })
       .catch(err => {
         res.status(500).send({ message: err.message });
       });
     };
- 
+ /**
+ * POST/register
+ * registerfeature
+*/
 exports.register = async(req, res) => {
   // console.log(req.body);
    User.findOne({ username: req.body.username }, (err, user) => {
@@ -304,108 +296,6 @@ exports.register = async(req, res) => {
     else{
         console.log(result);
         res.redirect('/login');
-        // res.send("successs");
     }
 })
 }
-
-
-// Delete Recipe
-// async function deleteRecipe(){
-//   try {
-//     await Recipe.deleteOne({ name: 'New Recipe From Form' });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-// deleteRecipe();
-
-
-// Update Recipe
-// async function updateRecipe(){
-//   try {
-//     const res = await Recipe.updateOne({ name: 'New Recipe' }, { name: 'New Recipe Updated' });
-//     res.n; // Number of documents matched
-//     res.nModified; // Number of documents modified
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-// updateRecipe();
-
-
-/**
- * Dummy Data Example 
-*/
-
-// async function insertDymmyCategoryData(){
-//   try {
-//     await Category.insertMany([
-//       {
-//         "name": "Thai",
-//         "image": "thai-food.jpg"
-//       },
-//       {
-//         "name": "American",
-//         "image": "american-food.jpg"
-//       }, 
-//       {
-//         "name": "Chinese",
-//         "image": "chinese-food.jpg"
-//       },
-//       {
-//         "name": "Mexican",
-//         "image": "mexican-food.jpg"
-//       }, 
-//       {
-//         "name": "Indian",
-//         "image": "indian-food.jpg"
-//       },
-//       {
-//         "name": "Spanish",
-//         "image": "spanish-food.jpg"
-//       }
-//     ]);
-//   } catch (error) {
-//     console.log('err', + error)
-//   }
-// }
-
-// insertDymmyCategoryData();
-
-
-// async function insertDymmyRecipeData(){
-//   try {
-//     await Recipe.insertMany([
-//       { 
-//         "name": "Recipe Name Goes Here",
-//         "description": `Recipe Description Goes Here`,
-//         "email": "recipeemail@raddy.co.uk",
-//         "ingredients": [
-//           "1 level teaspoon baking powder",
-//           "1 level teaspoon cayenne pepper",
-//           "1 level teaspoon hot smoked paprika",
-//         ],
-//         "category": "American", 
-//         "image": "southern-friend-chicken.jpg"
-//       },
-//       { 
-//         "name": "Recipe Name Goes Here",
-//         "description": `Recipe Description Goes Here`,
-//         "email": "recipeemail@raddy.co.uk",
-//         "ingredients": [
-//           "1 level teaspoon baking powder",
-//           "1 level teaspoon cayenne pepper",
-//           "1 level teaspoon hot smoked paprika",
-//         ],
-//         "category": "American", 
-//         "image": "southern-friend-chicken.jpg"
-//       },
-//     ]);
-//   } catch (error) {
-//     console.log('err', + error)
-//   }
-// }
-
-// insertDymmyRecipeData();
-

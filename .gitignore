@@ -1,2 +1,30 @@
-node_modules
- .env
+# Ignore Node.js modules and their dependencies
+node_modules/
+npm-debug.log
+
+# Ignore log files and database files
+logs/
+*.log
+*.sqlite
+
+# Ignore IDE and text editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore compiled code and build output
+dist/
+build/
+out/
+
+# Ignore environment-specific configuration files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Ignore generated and temporary files
+.cache/
+.tmp/
